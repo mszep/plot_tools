@@ -21,8 +21,8 @@ def main(infile):
         raise ValueError('Error: nonsquare number of matrix \
                           elements in input: ' + str(n2))
 
-    f = abs(f).reshape(n, n).transpose()
-    plt.imshow(f)
+    f = abs(f).reshape(n, n).transpose() + 1.0E-5
+    plt.imshow(scipy.log(f))
     plt.colorbar()
     plt.show()
 
