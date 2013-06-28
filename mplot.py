@@ -9,7 +9,7 @@ def main(infile):
     try:
         f = scipy.loadtxt((re.sub('[dD]', 'E', line)
             for line in infile))
-    except ValueError:
+    except ValueError: # it might be a complex: (real, imag)
         infile.seek(0)
         f = scipy.loadtxt((eval(re.sub('[dD]', 'E', line))[0]
             for line in infile))

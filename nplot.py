@@ -14,18 +14,20 @@ def sanitized(input):
         except ValueError:
             pass
 
-def main(infile):
-
+def main(infile, cols_list=[]):
     arr = scipy.loadtxt(sanitized(infile))
-    
-    if len(sys.argv) > 1:
-        xaxis, yaxis = [int(i) -1 for i in sys.argv[1].split(':')]
-        plt.plot(arr[:,xaxis], arr[:,yaxis])
-    else:
-        for i in range(1, a.shape[1]):
-            plt.plot(arr[:,0], arr[:,i])
-
+    if cols_list == []:
+        for i in range(1, arr.shape[1]):
+            cols_list.append((0, i))
+    for cols in cols_list:
+        plt.plot(arr[:,cols[0]], arr[:,cols[1]])
     plt.show()
 
 if __name__ == '__main__':
-    main(sys.stdin)
+    if len(sys.argv) > 2:
+        sys.exit('Error; too many command line arguments')
+    elif len(sys.argv) == 2:
+        cols = tuple([int(i) -1 for i in sys.argv[1].split(':')])
+        main(sys.stdin, [cols])
+    else:
+        main(sys.stdin)
